@@ -18,10 +18,10 @@ class DokumenSiswaController extends Controller
     public function index(Siswa $siswa)
     {
         if (request()->ajax()) {
-            $query = DokumenSiswa::all()->where('siswa_id', $siswa->id);
+            $query = DokumenSiswa::where('siswa_id', $siswa->id);
 
             return DataTables::of($query)
-                ->addcolumn('action', function ($dokumen) {
+                ->addColumn('action', function ($dokumen) {
                     return '
                     <form class="inline-block" action="' . route('dashboard.dokumen.destroy', $dokumen->id) . '" method="POST">
                         <button class="border border-red-500 bg-red-500 text-white rounded-md px-2 py-1 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline" >
@@ -34,9 +34,9 @@ class DokumenSiswaController extends Controller
                     return '<img style="max-width: 150px;" src="' . $dokumen->url . '"/>';
                 })
                 ->editColumn('is_featured', function ($dokumen) {
-                    return $dokumen->is_featured ? 'Yes' : 'No';
+                    return $dokumen->is_featured ? 'No' : 'Yes';
                 })
-                ->rawColumn(['action', 'url'])
+                ->rawColumns(['action', 'url'])
                 ->make();
         }
         return view('pages.dashboard.dokumen.index', compact('siswa'));
@@ -62,7 +62,7 @@ class DokumenSiswaController extends Controller
     public function store(DokumenSiswaRequest $request, Siswa $siswa)
     {
         $files = $request->file('files');
-        $jenis = $request->has('jenis');
+
 
         if ($request->hasFile('files')) {
             foreach ($files as $file) {
@@ -70,7 +70,7 @@ class DokumenSiswaController extends Controller
 
                 DokumenSiswa::create([
                     'siswa_id' => $siswa->id,
-                    'jenis' => $jenis,
+                    'jenis' => $request['jenis'],
                     'url' => $path
                 ]);
             }
