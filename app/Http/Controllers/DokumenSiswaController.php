@@ -21,27 +21,20 @@ class DokumenSiswaController extends Controller
             $query = DokumenSiswa::where('siswa_id', $siswa->id);
 
             return DataTables::of($query)
-                ->addColumn('action', function ($item) {
+                ->addColumn('action', function ($dokumen) {
                     return '
-                    <div class="inline-flex gap-1">
-                        <form class="inline-block" action="' . route('dashboard.dokumen.destroy', $item->id) . '" method="POST"></form>
-                        <button class="btn btn-default" >
-                            <i class="material-icons orange">face</i></a>
-                        </button>
-                        ' . method_field('delete') . csrf_field() . '
-                    </div>
-                    <form class="border" action="' . route('dashboard.dokumen.destroy', $item->id) . '" method="POST">
-                            <button class=" bg-red-500 text-white rounded-md px-2 py-1 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline" >
-                            Hapus
+                    <form class="inline-flex gap-1" action="' . route('dashboard.dokumen.destroy', $dokumen->id) . '" method="POST">
+                            <button class="btn btn-default" >
+                                <i class="material-icons delete" title="Hapus" data-toggle="tooltip" data-placement="top">delete</i>
                             </button>
-                                ' . method_field('delete') . csrf_field() . '
-                        </form>';
+                            ' . method_field('delete') . csrf_field() . '
+                    </form>';
                 })
-                ->editColumn('url', function ($item) {
-                    return '<img style="max-width: 150px;" src="' . $item->url . '"/>';
+                ->editColumn('url', function ($dokumen) {
+                    return '<img style="max-width: 150px;" src="' . $dokumen->url . '"/>';
                 })
-                ->editColumn('is_featured', function ($item) {
-                    return $item->is_featured ? 'No' : 'Yes';
+                ->editColumn('is_featured', function ($dokumen) {
+                    return $dokumen->is_featured ? 'Yes' : 'No';
                 })
                 ->rawColumns(['action', 'url'])
                 ->make();
@@ -129,6 +122,7 @@ class DokumenSiswaController extends Controller
     public function destroy(DokumenSiswa $dokumen)
     {
         $dokumen->delete();
-        return redirect()->route('dashboard.siswa.dokumen.index', $dokumen->siswa_id);
+
+        return redirect()->back();
     }
 }

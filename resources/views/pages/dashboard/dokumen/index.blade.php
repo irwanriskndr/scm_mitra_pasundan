@@ -34,7 +34,7 @@
                         name: 'action',
                         orderable: false,
                         searchable: false,
-                        width: '25%'
+                        width: '5%'
                     },
                 ],
             });
@@ -58,7 +58,7 @@
                                 <th class="px-2 py-4">Jenis</th>
                                 <th class="px-6 py-4">Photo</th>
                                 <th class="px-6 py-4">Featured</th>
-                                <th class="px-6 py-4">Action</th>
+                                <th class="px-6 py-4">Aksi</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

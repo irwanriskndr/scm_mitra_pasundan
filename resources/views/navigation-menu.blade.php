@@ -22,6 +22,11 @@
                             {{ __('Siswa') }}
                         </x-jet-nav-link>
 
+                        <x-jet-nav-link href="{{ route('dashboard.user.index') }}"
+                            :active="request()->routeIs('dashboard.user.index')">
+                            {{ __('User') }}
+                        </x-jet-nav-link>
+
                         {{-- <x-jet-nav-link href="{{ route('') }}" :active="request()->routeIs('')">
                             {{ __('Jurusan') }}
                         </x-jet-nav-link>
@@ -181,6 +186,10 @@
                 <x-jet-responsive-nav-link href="{{ route('dashboard.siswa.index') }}"
                     :active="request()->routeIs('dashboard.siswa.index')">
                     {{ __('Siswa') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('dashboard.user.index') }}"
+                    :active="request()->routeIs('dashboard.user.index')">
+                    {{ __('User') }}
                 </x-jet-responsive-nav-link>
                 {{-- <x-jet-responsive-nav-link href="{{ route('dashboard.category.index') }}" :active="request()->routeIs('dashboard.category.index')">
                     {{ __('Category') }}
