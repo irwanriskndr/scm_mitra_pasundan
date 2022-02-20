@@ -19,6 +19,16 @@ class RequestSiswaDetail extends Model
 
     public function siswa()
     {
-        return $this->hasOne(Siswa::class, 'id', 'siswa_id');
+        return $this->belongsTo(Siswa::class, 'siswa_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function request()
+    {
+        return $this->belongsTo(RequestSiswa::class, 'request_siswa_id', 'id');
     }
 }

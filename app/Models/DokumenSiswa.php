@@ -24,4 +24,8 @@ class DokumenSiswa extends Model
     {
         return config('app.url') . Storage::url($url);
     }
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'siswa_id', 'id');
+    }
 }

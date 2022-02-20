@@ -37,4 +37,9 @@ class Siswa extends Model
     {
         return $this->hasMany(DokumenSiswa::class, 'siswa_id', 'id');
     }
+
+    public function mataPelajarans()
+    {
+        return $this->hasMany(MataPelajaran::class, 'siswa_id', 'id');
+    }
 }

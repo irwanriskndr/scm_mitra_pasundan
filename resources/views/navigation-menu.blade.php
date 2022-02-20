@@ -22,6 +22,11 @@
                             {{ __('Siswa') }}
                         </x-jet-nav-link>
 
+                        <x-jet-nav-link href="{{ route('dashboard.requesting.index') }}"
+                            :active="request()->routeIs('dashboard.requesting.index')">
+                            {{ __('Request') }}
+                        </x-jet-nav-link>
+
                         <x-jet-nav-link href="{{ route('dashboard.user.index') }}"
                             :active="request()->routeIs('dashboard.user.index')">
                             {{ __('User') }}
@@ -39,6 +44,19 @@
                             {{ __('User') }}
                         </x-jet-nav-link> --}}
                     @endif
+                    @if (Auth::user()->roles == 'GURU')
+                        <x-jet-nav-link href="{{ route('dashboard.siswas.index') }}"
+                            :active="request()->routeIs('dashboard.siswas.index')">
+                            {{ __('Siswa') }}
+                        </x-jet-nav-link>
+                    @endif
+                    @if (Auth::user()->roles == 'COMPANY')
+                        <x-jet-nav-link href="{{ route('dashboard.requests.index') }}"
+                            :active="request()->routeIs('dashboard.requests.index')">
+                            {{ __('Request') }}
+                        </x-jet-nav-link>
+                    @endif
+
                 </div>
             </div>
 
@@ -187,6 +205,10 @@
                     :active="request()->routeIs('dashboard.siswa.index')">
                     {{ __('Siswa') }}
                 </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('dashboard.requesting.index') }}"
+                    :active="request()->routeIs('dashboard.requesting.index')">
+                    {{ __('Request') }}
+                </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('dashboard.user.index') }}"
                     :active="request()->routeIs('dashboard.user.index')">
                     {{ __('User') }}
@@ -200,6 +222,18 @@
                 <x-jet-responsive-nav-link href="{{ route('dashboard.user.index') }}" :active="request()->routeIs('dashboard.user.index')">
                     {{ __('User') }}
                 </x-jet-responsive-nav-link> --}}
+            @endif
+            @if (Auth::user()->roles == 'GURU')
+                <x-jet-responsive-nav-link href="{{ route('dashboard.siswas.index') }}"
+                    :active="request()->routeIs('dashboard.siswas.index')">
+                    {{ __('Siswa') }}
+                </x-jet-responsive-nav-link>
+            @endif
+            @if (Auth::user()->roles == 'COMPANY')
+                <x-jet-responsive-nav-link href="{{ route('dashboard.requests.index') }}"
+                    :active="request()->routeIs('dashboard.requests.index')">
+                    {{ __('Request') }}
+                </x-jet-responsive-nav-link>
             @endif
         </div>
 

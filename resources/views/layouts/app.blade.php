@@ -150,6 +150,10 @@
             color: #34e324;
         }
 
+        .material-icons.add {
+            color: #0b1aec;
+        }
+
     </style>
     @livewireStyles
 

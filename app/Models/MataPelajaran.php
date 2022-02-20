@@ -16,5 +16,16 @@ class MataPelajaran extends Model
         'nama',
         'nilai',
         'semester_id',
+        'siswa_id',
     ];
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'semester_id', 'id');
+    }
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'siswa_id', 'id');
+    }
 }

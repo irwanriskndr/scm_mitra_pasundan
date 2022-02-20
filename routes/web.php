@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\API\UserController as APIUserController;
+use App\Http\Controllers\COMPANY\RequestSiswaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DokumenSiswaController;
+use App\Http\Controllers\GURU\MataPelajaranController;
+use App\Http\Controllers\GURU\SiswaController as GURUSiswaController;
+use App\Http\Controllers\RequestSiswaController as ControllersRequestSiswaController;
+use App\Http\Controllers\RequestSiswaDetailController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\UserController;
-use Brick\Math\RoundingMode;
-use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +23,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('auth.login');
+});
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');
@@ -39,6 +43,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::resource('user', UserController::class)->only([
                 'index', 'edit', 'update', 'destroy'
             ]);
+            Route::resource('requesting', ControllersRequestSiswaController::class);
+            Route::resource('requesting.detail', RequestSiswaDetailController::class)->shallow()->only([
+                'index', 'create', 'store', 'destroy', 'edit', 'update'
+            ]);
             // Route::resource('category', ProductCategoryController::class);
             // Route::resource('product.gallery', ProductGalleryController::class)->shallow()->only([
             //     'index', 'create', 'store', 'destroy'
@@ -46,7 +54,17 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             // Route::resource('transaction', TransactionController::class)->only([
             //     'index', 'show', 'edit', 'update'
             // ]);
+        });
 
+        Route::middleware(['guru'])->group(function () {
+            Route::resource('siswas', GURUSiswaController::class);
+            Route::resource('siswas.nilai', MataPelajaranController::class)->shallow()->only([
+                'index', 'create', 'store', 'destroy', 'edit', 'update'
+            ]);
+        });
+
+        Route::middleware(['company'])->group(function () {
+            Route::resource('requests', RequestSiswaController::class);
         });
     });
 });

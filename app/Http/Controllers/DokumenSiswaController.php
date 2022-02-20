@@ -18,23 +18,25 @@ class DokumenSiswaController extends Controller
     public function index(Siswa $siswa)
     {
         if (request()->ajax()) {
-            $query = DokumenSiswa::where('siswa_id', $siswa->id);
+            $query = DokumenSiswa::query()
+                ->with('siswa')
+                ->where('siswa_id', $siswa->id);
 
             return DataTables::of($query)
-                ->addColumn('action', function ($dokumen) {
+                ->addColumn('action', function ($item) {
                     return '
-                    <form class="inline-flex gap-1" action="' . route('dashboard.dokumen.destroy', $dokumen->id) . '" method="POST">
+                    <form class="inline-flex gap-1" action="' . route('dashboard.dokumen.destroy', $item->id) . '" method="POST">
                             <button class="btn btn-default" >
                                 <i class="material-icons delete" title="Hapus" data-toggle="tooltip" data-placement="top">delete</i>
                             </button>
                             ' . method_field('delete') . csrf_field() . '
                     </form>';
                 })
-                ->editColumn('url', function ($dokumen) {
-                    return '<img style="max-width: 150px;" src="' . $dokumen->url . '"/>';
+                ->editColumn('url', function ($item) {
+                    return '<img style="max-width: 150px;" src="' . $item->url . '"/>';
                 })
-                ->editColumn('is_featured', function ($dokumen) {
-                    return $dokumen->is_featured ? 'Yes' : 'No';
+                ->editColumn('is_featured', function ($item) {
+                    return $item->is_featured ? 'Yes' : 'No';
                 })
                 ->rawColumns(['action', 'url'])
                 ->make();
@@ -85,7 +87,7 @@ class DokumenSiswaController extends Controller
      * @param  \App\Models\DokumenSiswa  $dokumenSiswa
      * @return \Illuminate\Http\Response
      */
-    public function show(DokumenSiswa $dokumenSiswa)
+    public function show(DokumenSiswa $dokumen)
     {
         //
     }
@@ -96,7 +98,7 @@ class DokumenSiswaController extends Controller
      * @param  \App\Models\DokumenSiswa  $dokumenSiswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(DokumenSiswa $dokumenSiswa)
+    public function edit(DokumenSiswa $dokumen)
     {
         //
     }
@@ -108,7 +110,7 @@ class DokumenSiswaController extends Controller
      * @param  \App\Models\DokumenSiswa  $dokumenSiswa
      * @return \Illuminate\Http\Response
      */
-    public function update(DokumenSiswaRequest $request, DokumenSiswa $dokumenSiswa)
+    public function update(DokumenSiswaRequest $request, DokumenSiswa $dokumen)
     {
         //
     }
@@ -123,6 +125,6 @@ class DokumenSiswaController extends Controller
     {
         $dokumen->delete();
 
-        return redirect()->back();
+        return redirect()->route('dashboard.siswa.dokumen.index', $dokumen->siswa_id);
     }
 }
