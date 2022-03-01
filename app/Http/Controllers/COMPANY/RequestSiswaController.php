@@ -18,7 +18,7 @@ class RequestSiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index()
     {
         if (request()->ajax()) {
             $query = RequestSiswa::query()
@@ -28,14 +28,14 @@ class RequestSiswaController extends Controller
                     return '
                     
                     <div class="inline-flex gap-1">
-                        <a class="inline-flex" title="Detail" data-toggle="tooltip" data-placement="top" href="' . route('dashboard.requests.show', $item->id) . '">
+                        <a class="inline-flex" title="Detail" data-toggle="tooltip" data-placement="top" href="' . route('dashboard.requested.details.index', $item->id) . '">
                             <i class="material-icons view">visibility</i>
                         </a>
-                        <a class="inline-flex" title="Edit" data-toggle="tooltip" data-placement="top" href="' . route('dashboard.requests.edit', $item->id) . '">
+                        <a class="inline-flex" title="Edit" data-toggle="tooltip" data-placement="top" href="' . route('dashboard.requested.edit', $item->id) . '">
                             <i class="material-icons edit">edit</i>
                         </a>      
                     </div>
-                        <form class="inline-flex gap-1" action="' . route('dashboard.requests.destroy', $item->id) . '" method="POST">
+                        <form class="inline-flex gap-1" action="' . route('dashboard.requested.destroy', $item->id) . '" method="POST">
                             <button class="btn btn-default" >
                                 <i class="material-icons delete" title="Hapus" data-toggle="tooltip" data-placement="top">delete</i>
                             </button>
@@ -77,7 +77,7 @@ class RequestSiswaController extends Controller
         //     'user_id' => Auth::user()->id
         // ]);
 
-        return redirect()->route('dashboard.requests.index', $user->id);
+        return redirect()->route('dashboard.requested.index', $user->id);
     }
 
     /**
@@ -97,10 +97,10 @@ class RequestSiswaController extends Controller
      * @param  \App\Models\RequestSiswa  $requests
      * @return \Illuminate\Http\Response
      */
-    public function edit(Requestsiswa $request)
+    public function edit(Requestsiswa $requested)
     {
         return view('pages.dashboard.company.request.edit', [
-            'item' => $request
+            'item' => $requested
         ]);
     }
 
@@ -111,11 +111,11 @@ class RequestSiswaController extends Controller
      * @param  \App\Models\RequestSiswa  $requests
      * @return \Illuminate\Http\Response
      */
-    public function update(RequestSiswaRequest $requesting, RequestSiswa $request)
+    public function update(RequestSiswaRequest $requesting, RequestSiswa $requested)
     {
         $data = $requesting->all();
-        $request->update($data);
-        return redirect()->route('dashboard.requests.index');
+        $requested->update($data);
+        return redirect()->route('dashboard.requested.index');
     }
 
 
@@ -125,9 +125,9 @@ class RequestSiswaController extends Controller
      * @param  \App\Models\RequestSiswa  $requestSiswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RequestSiswa $request)
+    public function destroy(RequestSiswa $requested)
     {
-        $request->delete();
-        return redirect()->route('dashboard.requests.index');
+        $requested->delete();
+        return redirect()->route('dashboard.requested.index');
     }
 }

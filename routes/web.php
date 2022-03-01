@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\UserController as APIUserController;
 use App\Http\Controllers\COMPANY\RequestSiswaController;
+use App\Http\Controllers\COMPANY\RequestSiswaDetailController as COMPANYRequestSiswaDetailController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DokumenSiswaController;
 use App\Http\Controllers\GURU\MataPelajaranController;
@@ -45,7 +46,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             ]);
             Route::resource('requesting', ControllersRequestSiswaController::class);
             Route::resource('requesting.detail', RequestSiswaDetailController::class)->shallow()->only([
-                'index', 'create', 'store', 'destroy', 'edit', 'update'
+                'index', 'create', 'store', 'destroy'
             ]);
             // Route::resource('category', ProductCategoryController::class);
             // Route::resource('product.gallery', ProductGalleryController::class)->shallow()->only([
@@ -64,7 +65,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         });
 
         Route::middleware(['company'])->group(function () {
-            Route::resource('requests', RequestSiswaController::class);
+            Route::resource('requested', RequestSiswaController::class);
+            Route::resource('requested.details', COMPANYRequestSiswaDetailController::class)->shallow()->only([
+                'index', 'destroy'
+            ]);
         });
     });
 });

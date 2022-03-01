@@ -26,10 +26,10 @@ class DokumenSiswaController extends Controller
                 ->addColumn('action', function ($item) {
                     return '
                     <form class="inline-flex gap-1" action="' . route('dashboard.dokumen.destroy', $item->id) . '" method="POST">
-                            <button class="btn btn-default" >
-                                <i class="material-icons delete" title="Hapus" data-toggle="tooltip" data-placement="top">delete</i>
-                            </button>
-                            ' . method_field('delete') . csrf_field() . '
+                        <button class="btn btn-default" >
+                        <i class="material-icons delete" title="Hapus" data-toggle="tooltip" data-placement="top">delete</i>
+                        </button>
+                        ' . method_field('delete') . csrf_field() . '
                     </form>';
                 })
                 ->editColumn('url', function ($item) {
@@ -51,7 +51,6 @@ class DokumenSiswaController extends Controller
      */
     public function create(Siswa $siswa)
     {
-
         return view('pages.dashboard.dokumen.create', compact('siswa'));
     }
 
@@ -84,7 +83,7 @@ class DokumenSiswaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DokumenSiswa  $dokumenSiswa
+     * @param  \App\Models\DokumenSiswa  $dokumen
      * @return \Illuminate\Http\Response
      */
     public function show(DokumenSiswa $dokumen)
@@ -95,7 +94,7 @@ class DokumenSiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\DokumenSiswa  $dokumenSiswa
+     * @param  \App\Models\DokumenSiswa  $dokumen
      * @return \Illuminate\Http\Response
      */
     public function edit(DokumenSiswa $dokumen)
@@ -107,7 +106,7 @@ class DokumenSiswaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DokumenSiswa  $dokumenSiswa
+     * @param  \App\Models\DokumenSiswa  $dokumen
      * @return \Illuminate\Http\Response
      */
     public function update(DokumenSiswaRequest $request, DokumenSiswa $dokumen)
@@ -118,13 +117,12 @@ class DokumenSiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DokumenSiswa  $dokumenSiswa
+     * @param  \App\Models\DokumenSiswa  $dokumen
      * @return \Illuminate\Http\Response
      */
     public function destroy(DokumenSiswa $dokumen)
     {
         $dokumen->delete();
-
-        return redirect()->route('dashboard.siswa.dokumen.index', $dokumen->siswa_id);
+        return redirect()->route('dashboard.siswa.dokumen.index', $dokumen->id);
     }
 }

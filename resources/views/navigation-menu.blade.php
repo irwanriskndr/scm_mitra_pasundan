@@ -51,8 +51,8 @@
                         </x-jet-nav-link>
                     @endif
                     @if (Auth::user()->roles == 'COMPANY')
-                        <x-jet-nav-link href="{{ route('dashboard.requests.index') }}"
-                            :active="request()->routeIs('dashboard.requests.index')">
+                        <x-jet-nav-link href="{{ route('dashboard.requested.index') }}"
+                            :active="request()->routeIs('dashboard.requested.index')">
                             {{ __('Request') }}
                         </x-jet-nav-link>
                     @endif
@@ -230,8 +230,8 @@
                 </x-jet-responsive-nav-link>
             @endif
             @if (Auth::user()->roles == 'COMPANY')
-                <x-jet-responsive-nav-link href="{{ route('dashboard.requests.index') }}"
-                    :active="request()->routeIs('dashboard.requests.index')">
+                <x-jet-responsive-nav-link href="{{ route('dashboard.requested.index') }}"
+                    :active="request()->routeIs('dashboard.requested.index')">
                     {{ __('Request') }}
                 </x-jet-responsive-nav-link>
             @endif

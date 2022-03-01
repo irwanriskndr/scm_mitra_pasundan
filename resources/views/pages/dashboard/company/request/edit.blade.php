@@ -24,8 +24,8 @@
                         </div>
                     </div>
                 @endif
-                <form class="w-full" action="{{ route('dashboard.requests.update', $item->id) }}" method="post"
-                    enctype="multipart/form-data">
+                <form class="w-full" action="{{ route('dashboard.requested.update', $item->id) }}"
+                    method="post" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="flex flex-wrap -mx-3 mb-6">
@@ -48,6 +48,26 @@
                             <input value="{{ old('jumlah') ?? $item->jumlah }}" name="jumlah"
                                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="grid-last-name" type="number">
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                for="grid-last-name">
+                                Status
+                            </label>
+                            <select name="status"
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="grid-last-name">
+                                <option value="{{ old('status') ?? $item->status }}">{{ $item->status }}
+                                </option>
+                                <option disabled>----</option>
+                                <option value="{{ 'REQUESTED' ?? $item->status }}">REQUESTED</option>
+                                <option value="{{ 'SUCCESS' ?? $item->status }}">SUCCESS</option>
+                                <option value="{{ 'CANCELLED' ?? $item->status }}">CANCELLED</option>
+                                <option value="{{ 'FAILED' ?? $item->status }}">FAILED</option>
+                                <option value="{{ 'UPDATED' ?? $item->status }}">UPDATED</option>
+                            </select>
                         </div>
                     </div>
                     <div class="flex flex-wrap -mx-3 mb-6">
